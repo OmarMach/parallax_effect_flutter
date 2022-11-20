@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:parallax_effect/screens/vertical_parallax_screen.dart';
+
+import 'screens/horizontal_parallax_screen.dart';
 
 void main() => runApp(const ParallaxEffect());
 
@@ -7,93 +10,66 @@ class ParallaxEffect extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      title: 'Material App',
+    return MaterialApp(
+      title: 'Parallax Effect',
       debugShowCheckedModeBanner: false,
-      home: HomePage(),
+      theme: ThemeData(brightness: Brightness.dark, scaffoldBackgroundColor: Color.fromARGB(132, 28, 0, 44)),
+      home: const HomeScreen(),
     );
   }
 }
 
-class HomePage extends StatefulWidget {
-  const HomePage({
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({
     Key? key,
   }) : super(key: key);
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomePageState extends State<HomePage> {
-  late PageController _pageController;
-  double page = 0.0;
-
-  @override
-  void initState() {
-    _pageController = PageController(
-      initialPage: 0,
-      viewportFraction: .5,
-    );
-
-    _pageController.addListener(() {
-      setState(() {
-        page = _pageController.page!;
-      });
-    });
-
-    super.initState();
-  }
-
+class _HomeScreenState extends State<HomeScreen> {
+  bool isVertical = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black45,
-      body: Center(
-        child: PageView.builder(
-          controller: _pageController,
-          itemCount: 10,
-          itemBuilder: (context, index) {
-            return Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: ParallaxImage(
-                url: 'http://source.unsplash.com/random/sig=$index',
-                horizontalSlide: (index - page).clamp(-1, 1).toDouble(),
+      body: Stack(
+        children: [
+          isVertical ? const VerticalParralaxScreen() : const HorizontalParralaxScreen(),
+          Positioned(
+            left: 0,
+            right: 0,
+            bottom: 0,
+            child: SafeArea(
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: GestureDetector(
+                  onTap: () {
+                    isVertical = !isVertical;
+                    setState(() {});
+                  },
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.amber,
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Center(
+                        child: Text(
+                          'Switch to ${isVertical ? 'Horizontal' : 'Vertical'} list',
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
               ),
-            );
-          },
-        ),
-      ),
-    );
-  }
-}
-
-class ParallaxImage extends StatelessWidget {
-  const ParallaxImage({
-    Key? key,
-    required this.url,
-    required this.horizontalSlide,
-  }) : super(key: key);
-
-  final String url;
-  final double horizontalSlide;
-
-  @override
-  Widget build(BuildContext context) {
-    final scale = 1 - horizontalSlide.abs();
-    final size = MediaQuery.of(context).size;
-
-    return Center(
-      child: SizedBox(
-        width: size.width * ((scale * 0.8) + 0.8),
-        height: size.height * ((scale * 0.2) + 0.2),
-        child: ClipRRect(
-          borderRadius: const BorderRadius.all(Radius.circular(20)),
-          child: Image.network(
-            url,
-            alignment: Alignment(horizontalSlide, 1),
-            fit: BoxFit.cover,
-          ),
-        ),
+            ),
+          )
+        ],
       ),
     );
   }

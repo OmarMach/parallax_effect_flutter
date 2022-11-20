@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:parallax_effect/widgets/horizontal_parallax_image.dart';
 
 import '../widgets/vertical_parallax_image.dart';
 
@@ -14,13 +13,13 @@ class VerticalParralaxScreen extends StatefulWidget {
 
 class _VerticalParralaxScreenState extends State<VerticalParralaxScreen> {
   late PageController _pageController;
-  double page = 0.0;
+  double page = 1;
 
   @override
   void initState() {
     _pageController = PageController(
-      initialPage: 0,
-      viewportFraction: .5,
+      initialPage: 1,
+      viewportFraction: .3,
     );
 
     _pageController.addListener(() {
@@ -34,21 +33,19 @@ class _VerticalParralaxScreenState extends State<VerticalParralaxScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: PageView.builder(
-        scrollDirection: Axis.vertical,
-        controller: _pageController,
-        itemCount: 10,
-        itemBuilder: (context, index) {
-          return Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: VerticalParallaxImage(
-              url: 'http://source.unsplash.com/random/sig=$index',
-              slide: (index - page).clamp(-1, 1).toDouble(),
-            ),
-          );
-        },
-      ),
+    return PageView.builder(
+      scrollDirection: Axis.vertical,
+      controller: _pageController,
+      itemCount: 10,
+      itemBuilder: (context, index) {
+        return Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: VerticalParallaxImage(
+            url: 'http://source.unsplash.com/random/sig=$index',
+            slide: (index - page).clamp(-1, 1).toDouble(),
+          ),
+        );
+      },
     );
   }
 }

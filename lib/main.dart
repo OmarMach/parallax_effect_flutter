@@ -13,7 +13,10 @@ class ParallaxEffect extends StatelessWidget {
     return MaterialApp(
       title: 'Parallax Effect',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(brightness: Brightness.dark, scaffoldBackgroundColor: Color.fromARGB(132, 28, 0, 44)),
+      theme: ThemeData(
+        brightness: Brightness.dark,
+        scaffoldBackgroundColor: const Color.fromARGB(132, 62, 1, 98),
+      ),
       home: const HomeScreen(),
     );
   }
@@ -50,7 +53,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   },
                   child: Container(
                     decoration: BoxDecoration(
-                      color: Colors.amber,
+                      color: const Color.fromARGB(255, 95, 5, 137),
                       borderRadius: BorderRadius.circular(10),
                     ),
                     child: Padding(
@@ -58,9 +61,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       child: Center(
                         child: Text(
                           'Switch to ${isVertical ? 'Horizontal' : 'Vertical'} list',
-                          style: const TextStyle(
-                            fontWeight: FontWeight.bold,
-                          ),
+                          style: const TextStyle(fontWeight: FontWeight.bold),
                         ),
                       ),
                     ),

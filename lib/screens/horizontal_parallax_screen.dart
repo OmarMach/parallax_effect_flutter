@@ -13,13 +13,13 @@ class HorizontalParralaxScreen extends StatefulWidget {
 
 class _HorizontalParralaxScreenState extends State<HorizontalParralaxScreen> {
   late PageController _pageController;
-  double page = 0.0;
+  double page = 1;
 
   @override
   void initState() {
     _pageController = PageController(
-      initialPage: 0,
-      viewportFraction: .5,
+      initialPage: 1,
+      viewportFraction: .7,
     );
 
     _pageController.addListener(() {

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-void main() => runApp(ParallaxEffectApp());
+void main() => runApp(const ParallaxEffectApp());
 
 class ParallaxEffectApp extends StatelessWidget {
   const ParallaxEffectApp({super.key});
@@ -10,7 +10,11 @@ class ParallaxEffectApp extends StatelessWidget {
     return MaterialApp(
       title: 'Material App',
       home: Scaffold(
-        body: SafeArea(child: ,)
+        body: SafeArea(
+          child: Column(
+            children: [],
+          ),
+        ),
       ),
     );
   }
